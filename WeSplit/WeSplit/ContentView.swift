@@ -8,41 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State var checkAmount = 0.00
+    @State var numbOfPeople = 2
+    @State var tipPercentage = 20
+
+    let tipPercentages = [10, 15, 20, 25, 0]
+
     var body: some View {
         NavigationView{
-            Form{
+            Form {
+                Section {
+                    TextField("Enter the amount:", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "AED"))
 
-                    Text("Hello, world!")
-                    Text("Hello, world!")
-                    Text("Hello, world!")
-                    Text("Hello, world!")
-
-                Section{
-                    Group{
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                    }
-                    Group{
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                    }
-
-                    Group{
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
-                        Text("Hello, world!")
+                    Picker("Number of people:", selection: $numbOfPeople) {
+                        ForEach(2..<100) {
+                            Text("\($0) People")
+                        }
                     }
                 }
-            }.navigationTitle("SwiftUI")
-                .navigationBarTitleDisplayMode(.inline)
+
+                Section {
+                    Picker("Tip Percenatge:", selection: $tipPercentage) {
+                        ForEach(tipPercentages, id: \.self) {
+                            Text("\($0)")
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+
+                Section {
+                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "AED"))
+                }
+            }.navigationTitle("WeSplit")
         }
     }
 }
