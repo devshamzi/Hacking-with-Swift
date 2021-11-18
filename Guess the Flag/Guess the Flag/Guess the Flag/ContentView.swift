@@ -17,32 +17,53 @@ struct ContentView: View {
     @State var correctAnswer = Int.random(in: 0...2)
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.purple, .pink], startPoint: .center, endPoint: .bottomLeading)
+            RadialGradient(stops: [
+                .init(color: .indigo, location: 0.30),
+                .init(color: .purple, location: 0.30)
+            ], center: .top, startRadius: 200, endRadius: 700)
+            VStack {
+                Spacer()
+                Text("Guess the Flag")
+                    .font(.largeTitle.bold())
+                    .foregroundColor(.white)
 
+                Spacer()
+                VStack(spacing: 20){
+                    VStack(spacing: 10){
+                        Text("Tap the Flag of")
+                            .foregroundStyle(.secondary)
+                            .font(.system(.headline))
+                        Text(countries[correctAnswer])
+                            .foregroundStyle(.secondary)
+                            .font(.system(.largeTitle))
 
-            VStack(spacing: 30){
-                VStack(spacing: 10){
-                    Text("Guess the Country Flag of")
-                        .foregroundColor(.white)
-                        .font(.system(.headline))
-                    Text(countries[correctAnswer])
-                        .foregroundColor(.white)
-                        .font(.system(.largeTitle))
+                    }
 
-                }
-
-                ForEach(0..<3) { number in
-                    Button() {
-                        checkIsCorrect(number: number)
-                    } label: {
-                        Image(countries[number])
-                            .renderingMode(.original)
-                            .clipShape(Capsule())
-                            .shadow(radius: 5)
+                    ForEach(0..<3) { number in
+                        Button() {
+                            checkIsCorrect(number: number)
+                        } label: {
+                            Image(countries[number])
+                                .renderingMode(.original)
+                                .clipShape(Capsule())
+                                .shadow(radius: 5)
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 50)
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+
+                Spacer()
+                Spacer()
+                Text("Your score: \(yourScore)")
+                    .font(.largeTitle.italic())
+                    .foregroundColor(.white)
+                Spacer()
             }
 
+            .padding()
         }
         .ignoresSafeArea()
         .alert(scoreTitle, isPresented: $showScore) {
@@ -50,6 +71,7 @@ struct ContentView: View {
         } message: {
             Text("Your score is \(yourScore)")
         }
+
     }
 
     func checkIsCorrect(number: Int) {
