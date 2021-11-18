@@ -1,2 +1,4 @@
-# WeSplit
-100 Days of SwiftUI
+# 100 Days of SwiftUI
+By Hacking-with-Swift - Paul Hudson
+
+
